@@ -5,7 +5,7 @@ import CriticScore from "./CriticScore";
 
 function GameCard({ game }: { game: Game }) {
   return (
-    <Card borderRadius="10" overflow="hidden">
+    <Card>
       <Image src={game.background_image} />
       <CardBody>
         <Heading fontSize="2xl">{game.name}</Heading>

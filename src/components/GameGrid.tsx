@@ -5,6 +5,7 @@ import useGames from "../hooks/useGames";
 import gameServiceGeneral from "../services/game-service-general";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
+import GameItemContainer from "./GameItemContainer";
 
 export interface Platform {
   id: number;
@@ -75,9 +76,15 @@ function GameGrid() {
         padding={10}
       >
         {isLoading &&
-          skeleton.map((number) => <GameCardSkeleton key={number} />)}
+          skeleton.map((number) => (
+            <GameItemContainer>
+              <GameCardSkeleton key={number} />
+            </GameItemContainer>
+          ))}
         {games.map((game) => (
-          <GameCard key={game.id} game={game} />
+          <GameItemContainer>
+            <GameCard key={game.id} game={game} />
+          </GameItemContainer>
         ))}
       </SimpleGrid>
     </>
