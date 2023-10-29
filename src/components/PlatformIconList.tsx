@@ -10,11 +10,11 @@ import {
 import { MdPhoneIphone } from "react-icons/md";
 import { SiNintendo } from "react-icons/si";
 import { BsGlobe } from "react-icons/bs";
-import { Platform } from "./GameGrid";
+import { Platform } from "../hooks/useGames";
 import { IconType } from "react-icons";
 
 const PlatformIconList = ({ platforms }: { platforms: Platform[] }) => {
-  console.log(platforms);
+  // console.log(platforms);
   const iconMap: { [key: string]: IconType } = {
     pc: FaWindows,
     linux: FaLinux,

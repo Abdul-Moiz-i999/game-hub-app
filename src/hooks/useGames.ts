@@ -1,34 +1,18 @@
-import { useEffect, useState } from "react";
-import apiClient, { CanceledError } from "../services/api-client";
+import useData from "./useData";
+
+export interface Platform {
+  id: number;
+  name: string;
+  slug: string;
+}
 
 interface Game {
   id: number;
   name: string;
+  background_image: string;
+  parent_platforms: { platform: Platform }[];
+  metacritic: number;
 }
 
-interface GamesResponse {
-  count: number;
-  next: string;
-  previous: string;
-  results: Game[];
-}
-
-const useGames = () => {
-  const [games, setGames] = useState<Game[]>([]);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const controller = new AbortController();
-    apiClient
-      .get<GamesResponse>("/games", { signal: controller.signal })
-      .then((res) => setGames(res.data.results))
-      .catch((err) => {
-        if (!(err instanceof CanceledError)) setError(err.message);
-      });
-
-    return () => controller.abort();
-  }, []);
-
-  return { games, setGames, error, setError };
-};
+const useGames = () => useData<Game>("games");
 export default useGames;

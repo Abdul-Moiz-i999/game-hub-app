@@ -1,38 +1,14 @@
-import React, { useEffect, useState } from "react";
-import apiClient, { CanceledError } from "../services/api-client";
+// import React, { useEffect, useState } from "react";
+// import apiClient, { CanceledError } from "../services/api-client";
 import { SimpleGrid, Text } from "@chakra-ui/react";
 import useGames from "../hooks/useGames";
-import gameServiceGeneral from "../services/game-service-general";
+// import gameServiceGeneral from "../services/game-service-general";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import GameItemContainer from "./GameItemContainer";
 
-export interface Platform {
-  id: number;
-  name: string;
-  slug: string;
-}
-
-export interface Game {
-  id: number;
-  name: string;
-  background_image: string;
-  parent_platforms: { platform: Platform }[];
-  metacritic: number;
-}
-
-interface GamesResponse {
-  count: number;
-  next: string;
-  previous: string;
-  results: Game[];
-}
-
 function GameGrid() {
-  // const { games, error } = useGames();
-  const [games, setGames] = useState<Game[]>([]);
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const { data: games, error, isLoading } = useGames();
 
   const skeleton = [1, 2, 3, 4, 5, 6];
 
@@ -48,28 +24,28 @@ function GameGrid() {
   //   return () => cancel();
   // }, []);
 
-  useEffect(() => {
-    setIsLoading(true);
-    const { response, cancel } = gameServiceGeneral.getAll<GamesResponse>();
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   const { response, cancel } = gameServiceGeneral.getAll<GamesResponse>();
 
-    response
-      .then((res) => {
-        setGames(res.data.results);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        if (!(err instanceof CanceledError)) {
-          setError(err.message);
-          setIsLoading(false);
-        }
-      });
+  //   response
+  //     .then((res) => {
+  //       setGames(res.data.results);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       if (!(err instanceof CanceledError)) {
+  //         setError(err.message);
+  //         setIsLoading(false);
+  //       }
+  //     });
 
-    return () => cancel();
-  }, []);
+  //   return () => cancel();
+  // }, []);
 
   return (
     <>
-      {error && <Text>{error}</Text>}
+      {/* {error && <Text>{error}</Text>} */}
       <SimpleGrid
         columns={{ sm: 1, md: 2, lg: 3, xl: 5 }}
         spacing={10}
@@ -77,13 +53,13 @@ function GameGrid() {
       >
         {isLoading &&
           skeleton.map((number) => (
-            <GameItemContainer>
-              <GameCardSkeleton key={number} />
+            <GameItemContainer key={number}>
+              <GameCardSkeleton />
             </GameItemContainer>
           ))}
         {games.map((game) => (
-          <GameItemContainer>
-            <GameCard key={game.id} game={game} />
+          <GameItemContainer key={game.id}>
+            <GameCard game={game} />
           </GameItemContainer>
         ))}
       </SimpleGrid>
