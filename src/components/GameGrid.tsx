@@ -5,10 +5,17 @@ import useGames from "../hooks/useGames";
 import gameServiceGeneral from "../services/game-service-general";
 import GameCard from "./GameCard";
 
+export interface Platform {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 export interface Game {
   id: number;
   name: string;
   background_image: string;
+  parent_platforms: { platform: Platform }[];
 }
 
 interface GamesResponse {
