@@ -14,6 +14,7 @@ const useGames = <T>(endpoint: string) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const controller = new AbortController();
     apiClient
       .get<DataResponse<T>>(endpoint, { signal: controller.signal })
