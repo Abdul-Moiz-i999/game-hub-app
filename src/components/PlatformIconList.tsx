@@ -1,4 +1,3 @@
-import React from "react";
 import { HStack, Icon } from "@chakra-ui/react";
 import {
   FaWindows,
@@ -15,6 +14,7 @@ import { Platform } from "./GameGrid";
 import { IconType } from "react-icons";
 
 const PlatformIconList = ({ platforms }: { platforms: Platform[] }) => {
+  console.log(platforms);
   const iconMap: { [key: string]: IconType } = {
     pc: FaWindows,
     linux: FaLinux,
@@ -31,7 +31,11 @@ const PlatformIconList = ({ platforms }: { platforms: Platform[] }) => {
   return (
     <HStack marginY={1}>
       {platforms.map((platform) => (
-        <Icon as={iconMap[platform.slug]} color="gray.500" />
+        <Icon
+          key={platform.name}
+          as={iconMap[platform.slug]}
+          color="gray.500"
+        />
       ))}
     </HStack>
   );
