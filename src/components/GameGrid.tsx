@@ -4,6 +4,7 @@ import { SimpleGrid, Text } from "@chakra-ui/react";
 import useGames from "../hooks/useGames";
 import gameServiceGeneral from "../services/game-service-general";
 import GameCard from "./GameCard";
+import GameCardSkeleton from "./GameCardSkeleton";
 
 export interface Platform {
   id: number;
@@ -30,6 +31,9 @@ function GameGrid() {
   // const { games, error } = useGames();
   const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const skeleton = [1, 2, 3, 4, 5, 6];
 
   // useEffect(() => {
   //   const { response, cancel } = gameService.getGames();
@@ -44,12 +48,19 @@ function GameGrid() {
   // }, []);
 
   useEffect(() => {
+    setIsLoading(true);
     const { response, cancel } = gameServiceGeneral.getAll<GamesResponse>();
 
     response
-      .then((res) => setGames(res.data.results))
+      .then((res) => {
+        setGames(res.data.results);
+        setIsLoading(false);
+      })
       .catch((err) => {
-        if (!(err instanceof CanceledError)) setError(err.message);
+        if (!(err instanceof CanceledError)) {
+          setError(err.message);
+          setIsLoading(false);
+        }
       });
 
     return () => cancel();
@@ -63,6 +74,8 @@ function GameGrid() {
         spacing={10}
         padding={10}
       >
+        {isLoading &&
+          skeleton.map((number) => <GameCardSkeleton key={number} />)}
         {games.map((game) => (
           <GameCard key={game.id} game={game} />
         ))}
