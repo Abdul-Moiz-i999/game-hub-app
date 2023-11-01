@@ -1,13 +1,15 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
-import { FormEvent, useRef } from "react";
+import { FormEvent, useContext, useRef } from "react";
 import { BsSearch } from "react-icons/bs";
+import { ContextProps, SearchContext } from "../App";
 
 interface Props {
   onSearchSubmit: (searchValue: string) => void;
 }
 
-const Searchbar = ({ onSearchSubmit }: Props) => {
+const Searchbar = () => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const { onSearchSubmit } = useContext(SearchContext) as ContextProps;
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
