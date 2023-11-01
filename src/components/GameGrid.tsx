@@ -6,9 +6,10 @@ import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import GameItemContainer from "./GameItemContainer";
+import { Genre } from "../hooks/useGenres";
 
-function GameGrid() {
-  const { data: games, error, isLoading } = useGames();
+function GameGrid({ genre }: { genre: Genre | null }) {
+  const { data: games, error, isLoading } = useGames(genre);
 
   const skeleton = [1, 2, 3, 4, 5, 6];
 
