@@ -1,6 +1,6 @@
 import "./App.css";
-import { createContext, useState } from "react";
-import { Grid, GridItem, HStack, Show } from "@chakra-ui/react";
+import { createContext, useState, useMemo } from "react";
+import { Box, Grid, GridItem, HStack, Show } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
 import GameGrid from "./components/GameGrid";
 import GenreList from "./components/GenreList";
@@ -8,6 +8,7 @@ import PlatformSelector from "./components/PlatformSelector";
 import { Genre } from "./hooks/useGenres";
 import { Platform } from "./hooks/useGames";
 import SortSelector from "./components/SortSelector";
+import GameHeading from "./components/GameHeading";
 
 export interface GameQuery {
   genre: Genre | null;
@@ -15,6 +16,8 @@ export interface GameQuery {
   sort: string;
   search: string;
 }
+
+export type HeadingProps = Omit<GameQuery, "search" | "sort">;
 
 export interface ContextProps {
   onSearchSubmit: (search: string) => void;
@@ -26,6 +29,12 @@ export const SearchContext = createContext<ContextProps | null>(null);
 
 function App() {
   const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
+  const gameQueryForHeading = useMemo(() => {
+    return {
+      platform: gameQuery.platform || null,
+      genre: gameQuery.genre || null,
+    };
+  }, [gameQuery.platform, gameQuery.genre]);
 
   const onSearchSubmit = (search: string) => {
     setGameQuery({ ...gameQuery, search });
@@ -61,18 +70,23 @@ function App() {
         </GridItem>
       </Show>
       <GridItem area="main">
-        <HStack spacing={5} paddingLeft={9}>
-          <PlatformSelector
-            selectedPlatform={gameQuery.platform}
-            onSelectPlatform={(platform) =>
-              setGameQuery({ ...gameQuery, platform })
-            }
-          />
-          <SortSelector
-            onSelectSort={(sort) => setGameQuery({ ...gameQuery, sort: sort })}
-            sortingBy={gameQuery.sort}
-          />
-        </HStack>
+        <Box paddingLeft={9}>
+          <GameHeading gameQuery={gameQueryForHeading} />
+          <HStack spacing={5}>
+            <PlatformSelector
+              selectedPlatform={gameQuery.platform}
+              onSelectPlatform={(platform) =>
+                setGameQuery({ ...gameQuery, platform })
+              }
+            />
+            <SortSelector
+              onSelectSort={(sort) =>
+                setGameQuery({ ...gameQuery, sort: sort })
+              }
+              sortingBy={gameQuery.sort}
+            />
+          </HStack>
+        </Box>
         <GameGrid gameQuery={gameQuery} />
       </GridItem>
     </Grid>
