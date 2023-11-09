@@ -2,7 +2,7 @@
 
 ![image](https://github.com/Abdul-Moiz-i999/game-hub-app/assets/67798125/7c581ac4-4119-4618-91b6-5ca8883ccb0d)
 ### Deployed App (Vercel):
-https://game-check-rawgapi-lgfn2ur86-abdul-moizs-projects-3dbb0eb3.vercel.app
+https://game-check-rawgapi-app.vercel.app
 
 ## Description
 
@@ -34,14 +34,6 @@ React with TypeScript: The project leverages React, a highly popular and efficie
 >7.  The application integrates static data and services to optimize code refactoring. This modular approach contributes to maintainability and scalability.
 
 ## Instructions To Setup
-1. Sign up for https://rawg.io
-2. Get your api key 
-3. Go to **src -> services -> api-client.ts** in the Project
-<img width="374" alt="get-apikey" src="https://github.com/Abdul-Moiz-i999/game-hub-app/assets/67798125/4633f629-9c9c-4543-aca8-4e0d70874e55">
-
-4. Paste your **api-key** in the **Key** property in the  _params_  object
-5. Run the Project Using
-
 
 ### Yarn: ###
 ```
@@ -52,3 +44,11 @@ yarn start
 ```
 npm i
 npm run dev or npm start
+```
+### Getting Your Own API Key:
+1. Sign up for https://rawg.io
+2. Get your api key 
+3. Go to **src -> services -> api-client.ts** in the Project
+<img width="374" alt="get-apikey" src="https://github.com/Abdul-Moiz-i999/game-hub-app/assets/67798125/4633f629-9c9c-4543-aca8-4e0d70874e55">
+
+4. Paste your **api-key** in the **Key** property in the  _params_  object
